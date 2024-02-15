@@ -45,43 +45,43 @@ public class Main {
         session.save(book2);
 
 
-        /*Query query = session.createQuery(" SELECT title FROM Book b WHERE b.publicationYear>2010");//01
+        Query query = session.createQuery(" SELECT title FROM Book b WHERE b.publicationYear>2010");//01
         List list = ((org.hibernate.query.Query<?>) query).list();
         System.out.println(list);
-*/
 
-       /* Query query = session.createQuery(" UPDATE Book b SET b.price = b.price+(b.price*10)/100 WHERE b.author.id = :authorId").setParameter("authorId", "A006");//02
+
+        Query query = session.createQuery(" UPDATE Book b SET b.price = b.price+(b.price*10)/100 WHERE b.author.id = :authorId").setParameter("authorId", "A006");//02
         double i = query.executeUpdate();
-        System.out.println("Update value: "+i);*/
+        System.out.println("Update value: "+i);
 
 
-       /* Query query = session.createQuery(" SELECT avg(price) FROM Book b "); //04
+        Query query = session.createQuery(" SELECT avg(price) FROM Book b "); //04
         List list =  ((org.hibernate.query.Query<?>) query).list();
-        System.out.println(list);*/
+        System.out.println(list);
 
-        /* Query query = session.createQuery(" SELECT a,count(b) FROM Author a JOIN a.books b group by a.id",Object[].class); //05
+        Query query = session.createQuery(" SELECT a,count(b) FROM Author a JOIN a.books b group by a.id",Object[].class); //05
         List<Object[]> resultList = query.getResultList();
         for (Object[] result : resultList){
             Author a = (Author) result[0];
             Long bookCount = (Long) result[1];
             System.out.println("Author: " + a.getName() + ", Book Count: " + bookCount);
-        }*/
+        }
 
 
 
 
-      /*  List<Author> authors = session.createQuery("SELECT a FROM Author a " + "WHERE SIZE(a.books) > (" + "   SELECT AVG(SIZE(b.books)) FROM Author b" + ")", Author.class).getResultList();//10
+        List<Author> authors = session.createQuery("SELECT a FROM Author a " + "WHERE SIZE(a.books) > (" + "   SELECT AVG(SIZE(b.books)) FROM Author b" + ")", Author.class).getResultList();//10
 
 
         for (Author a : authors) {
             System.out.println("Author ID: " + a.getId() + ", Name: " + a.getName());
         }
-*/
+
         transaction.commit();
         session.close();
-       // deleteAuthorAndBooks("A003");//03
+        deleteAuthorAndBooks("A003");//03
     }
-    /*public static void deleteAuthorAndBooks(String authorId) {  //03
+    public static void deleteAuthorAndBooks(String authorId) {  //03
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -97,5 +97,5 @@ public class Main {
         transaction.commit();
         session.close();
     }
-*/
+
 }
