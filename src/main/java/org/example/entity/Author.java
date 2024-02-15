@@ -11,6 +11,16 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private String name;
+    private String country;
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Book> books;
 
@@ -24,9 +34,10 @@ public class Author {
     }
 
 
-    public Author(String id, String name, List<Book> books) {
+    public Author(String id, String name, String country, List<Book> books) {
         this.id = id;
         this.name = name;
+        this.country = country;
         this.books = books;
     }
 
@@ -37,6 +48,7 @@ public class Author {
         return "Author{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", country='" + country + '\'' +
                 ", books=" + books +
                 '}';
     }

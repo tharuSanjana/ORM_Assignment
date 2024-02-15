@@ -16,21 +16,22 @@ public class Main {
 
     public static void main(String[] args) {
         Author author = new Author();
-        author.setId("A008");
-        author.setName("James");
+        author.setId("A009");
+        author.setName("Manel");
+        author.setCountry("India");
 
         Book book1 = new Book();
-        book1.setId("B007");
-        book1.setTitle("Star");
-        book1.setPublicationYear(2005);
-        book1.setPrice(950);
+        book1.setId("B008");
+        book1.setTitle("Love");
+        book1.setPublicationYear(2019);
+        book1.setPrice(1950);
         book1.setAuthor(author);
 
         Book book2 = new Book();
-        book2.setId("B006");
-        book2.setTitle("Amma");
-        book2.setPublicationYear(2005);
-        book2.setPrice(2500);
+        book2.setId("B009");
+        book2.setTitle("Book");
+        book2.setPublicationYear(2007);
+        book2.setPrice(1500);
         book2.setAuthor(author);
 
         List<Book> bookList = new ArrayList<>();
@@ -59,7 +60,7 @@ public class Main {
         List list =  ((org.hibernate.query.Query<?>) query).list();
         System.out.println(list);
 
-        Query query = session.createQuery(" SELECT a,count(b) FROM Author a JOIN a.books b group by a.id",Object[].class); //05
+         Query query = session.createQuery(" SELECT a,count(b) FROM Author a JOIN a.books b group by a.id",Object[].class); //05
         List<Object[]> resultList = query.getResultList();
         for (Object[] result : resultList){
             Author a = (Author) result[0];
@@ -77,6 +78,12 @@ public class Main {
             System.out.println("Author ID: " + a.getId() + ", Name: " + a.getName());
         }
 
+
+        Query query = session.createQuery("FROM Book b WHERE b.author IN(SELECT a FROM Author a WHERE a.country = :country)").setParameter("country","India");//06
+        List<Book> resultList = query.getResultList();
+        for (Book book:resultList){
+            System.out.println("Title: " + book.getTitle() + ", Author: " + book.getAuthor().getName());
+        }
         transaction.commit();
         session.close();
         deleteAuthorAndBooks("A003");//03
