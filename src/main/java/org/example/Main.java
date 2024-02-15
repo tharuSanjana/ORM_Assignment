@@ -51,17 +51,17 @@ public class Main {
         System.out.println(list);
 
 
-        Query query = session.createQuery(" UPDATE Book b SET b.price = b.price+(b.price*10)/100 WHERE b.author.id = :authorId").setParameter("authorId", "A006");//02
-        double i = query.executeUpdate();
+        Query q = session.createQuery(" UPDATE Book b SET b.price = b.price+(b.price*10)/100 WHERE b.author.id = :authorId").setParameter("authorId", "A006");//02
+        double i = q.executeUpdate();
         System.out.println("Update value: "+i);
 
 
-        Query query = session.createQuery(" SELECT avg(price) FROM Book b "); //04
-        List list =  ((org.hibernate.query.Query<?>) query).list();
-        System.out.println(list);
+        Query qu = session.createQuery(" SELECT avg(price) FROM Book b "); //04
+        List li =  ((org.hibernate.query.Query<?>) qu).list();
+        System.out.println(li);
 
-         Query query = session.createQuery(" SELECT a,count(b) FROM Author a JOIN a.books b group by a.id",Object[].class); //05
-        List<Object[]> resultList = query.getResultList();
+         Query que = session.createQuery(" SELECT a,count(b) FROM Author a JOIN a.books b group by a.id",Object[].class); //05
+        List<Object[]> resultList = que.getResultList();
         for (Object[] result : resultList){
             Author a = (Author) result[0];
             Long bookCount = (Long) result[1];
@@ -79,9 +79,9 @@ public class Main {
         }
 
 
-        Query query = session.createQuery("FROM Book b WHERE b.author IN(SELECT a FROM Author a WHERE a.country = :country)").setParameter("country","India");//06
-        List<Book> resultList = query.getResultList();
-        for (Book book:resultList){
+        Query qry = session.createQuery("FROM Book b WHERE b.author IN(SELECT a FROM Author a WHERE a.country = :country)").setParameter("country","India");//06
+        List<Book> books = qry.getResultList();
+        for (Book book:books){
             System.out.println("Title: " + book.getTitle() + ", Author: " + book.getAuthor().getName());
         }
         transaction.commit();
